@@ -578,7 +578,11 @@ class Corona(commands.Cog):
 
             # initialise some variables and request user's reponse
             subscribers = ctx.bot.db["corona"]
-            subscriptions = subscribers[ctx.guild.id]["subscriptions"]
+            try:
+                subscriptions = subscribers[ctx.guild.id]["subscriptions"]
+            except KeyError:
+                raise BotRuntimeError("There're no active subscription in "
+                                      "this server.")
             if id_ is None:
                 await ctx.send("Respond with the ID to unsubscribe from.")
                 resp = await ctx.bot.wait_for(

@@ -1,5 +1,6 @@
 from discord.ext import commands
 import traceback
+import exceptions
 import discord
 
 
@@ -22,6 +23,29 @@ async def sendError(ctx, err, *, log_err: bool = True) -> None:
         print("An error occured while parsing a command error. "
               "The error is shown below:\n{}".format(err))
         tberr = err
+
+    # using command improperly
+    if isinstance(err, (commands.errors.MissingRequiredArgument,
+                        commands.errors.BadArgument,
+                        commands.errors.TooManyArguments)):
+        # send help
+        if ctx.invoked_subcommand:
+            await ctx.send_help(str(ctx.invoked_subcommand))
+        else:
+            await ctx.send_help(str(ctx.command))
+        return
+
+    if isinstance(err, exceptions.BotCommandError):
+        if not err.send_params[1].get("dont_log"):
+            logerr = err.__cause__ if err.__cause__ is not None else err
+            log(ctx, 'err', content='{}: {}'.format(
+                type(logerr).__name__, logerr),
+                reason='command execution error')
+        if err.send_params[1].get("format"):
+            await sendError(ctx, err.send_params[0], log_err=False)
+        else:
+            await ctx.send(err.send_params[0], **err.send_params[1])
+        return
 
     if log_err:
         log(ctx, 'err', content=tberr)

@@ -130,3 +130,6 @@ dmypy.json
 
 # bot database
 db.json
+
+# bot token
+token.txt
