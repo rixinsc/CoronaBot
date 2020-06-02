@@ -99,4 +99,7 @@ if __name__ == "__main__":
             name = name[:-3]
         bot.load_extension(name)
 
-    bot.run('token')
+    with open('token.txt', 'r', encoding='utf8') as f:
+        token = f.read().strip()
+
+    bot.run(token)
