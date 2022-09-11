@@ -1,4 +1,6 @@
 # CoronaBot - A bot module for tracking the Coronavirus epidermic
+> It is **no longer functioning** and I'm **not** currently planning to update it as the world is moving away from the pandemic, unless there's renewed intrests somehow.
+
 CoronaBot is a Discord bot module (or [cog](https://discordpy.readthedocs.io/en/stable/ext/commands/api.html#discord.ext.commands.Cog) in [`discord.py`](https://github.com/Rapptz/discord.py) jargon) made specifically for tracking the [Coronavirus epidermic](https://en.wikipedia.org/wiki/COVID-19_pandemic).
 It fetches and parses data from the [JHU CSSE database](https://github.com/CSSEGISandData/COVID-19) then present it in a nice way.
 
